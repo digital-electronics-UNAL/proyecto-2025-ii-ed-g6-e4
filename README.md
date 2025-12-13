@@ -10,6 +10,11 @@
 Wuyang
 
 # Documentación
+Los archivos de verilog se pueden obserbar en:
+- [Modulo LCD](LCD.v)
+- [Modulo regador](Pruebas1.v)
+- [Modulo Top](top.v)
+
 ## Descripción de la arquitectura
 
 Los principales sensores y herramientas usados en el proyecto son los siguientes:
@@ -75,6 +80,8 @@ Al integrar todo en un prototipo final, se observa un montaje similar el visto a
 <p align="center">
  Figura 1. Prototipo montaje Final.
 </p>
+
+Adicionalmente se puede ver un [video](Imagenes/Video_final.mp4) en el que se muestra el funcionamiento y se hace una explicación adicional simple del funcionamiento.
 
 La parte mas importante de las pruebas hechas con el proyecto ya montado tienen que ver con el tiempo de regado y el tiempo entre regados. Estos tiempos se acomodan manualmente, pero en realidad cambian para el tipo de planta, su tamano, y demas, en nuestro caso se escogi  ́ o una flor de pascua, la cual es sensible tanto al  ́
 exceso como a la falta de humedad; por ejemplo, el riego moderado se debe realizar cada 4 a 7 d ́ıas, se debe tener en cuenta que el agua tambien, es un desafi  ́ o crucial al contar con equipos electronicos por ello nos enfocamos en tener un tanque de agua que tuviera pocos orificios los cuales se pueda filtrar para no tener ningun inconveniente.
