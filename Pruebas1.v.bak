@@ -1,0 +1,70 @@
+module temporizador_cyclone4 (
+    input  wire clk,        // 50 MHz
+    input  wire reset,
+    input  wire sensor,     // Entrada externa FC28 (D0) YA FILTRADA A 3.3V
+    output reg  activo      // En 1 durante 5 s cada minuto (si sensor=1)
+);
+
+    // Contador del minuto (60 s  = 3,000,000,000 ciclos)
+    reg [31:0] contador_min = 0;
+
+    // Contador de 5 segundos (250,000,000 ciclos)
+    reg [31:0] contador_5s = 0;
+    
+
+    reg estado = 0;   // 0 = esperar 1 minuto, 1 = activar 5 s
+
+    always @(posedge clk) begin
+        if (reset) begin
+            estado        <= 0;
+            activo        <= 0;
+            contador_min  <= 0;
+            contador_5s   <= 0;
+
+        end else begin
+
+            // ================================
+            // SI SENSOR = 0 → TODO APAGADO
+            // ================================
+            if (!sensor) begin
+                estado        <= 0;
+                activo        <= 0;
+                contador_min  <= 0;
+                contador_5s   <= 0;
+
+            end else begin
+                // SENSOR = 1 → Permitir temporizador
+                case (estado)
+
+                    // ============================
+                    // ESTADO 0: ESPERAR 1 MINUTO
+                    // ============================
+                    0: begin
+                        activo <= 0;
+                        contador_min <= contador_min + 1;
+
+                        if (contador_min == 32'd3000000000) begin
+                            contador_min <= 0;
+                            estado <= 1;
+                        end
+                    end
+
+                    // ============================
+                    // ESTADO 1: ACTIVAR 5 SEGUNDOS
+                    // ============================
+                    1: begin
+                        activo <= 1;
+                        contador_5s <= contador_5s + 1;
+
+                        if (contador_5s == 32'd250000000) begin
+                            contador_5s <= 0;
+                            estado <= 0;
+                        end
+                    end
+
+                endcase
+            end
+        end
+    end
+
+endmodule
